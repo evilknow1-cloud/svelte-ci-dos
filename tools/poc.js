@@ -1,23 +1,22 @@
 import { writeFileSync } from "node:fs";
 
-const depth = 5000;
-const payloadSize = 50000000;
+const depth = 120;
+const payloadSize = 20_000_000; // 20MB
 
 let s = "";
 
-// Deep nesting
+// Opening blocks
 for (let i = 0; i < depth; i++) {
   s += "{#if true}\n";
 }
 
-// Huge payload
+// Payload
 s += "A".repeat(payloadSize);
 
-// Close nesting
+// Closing blocks
 for (let i = 0; i < depth; i++) {
   s += "{/if}\n";
 }
 
+// Write file
 writeFileSync("src/routes/+page.svelte", s);
-
-console.log("🔥 Malicious template generated");
